@@ -1,0 +1,22 @@
+{
+  "name": "tpjeujs",
+  "version": "1.0.0",
+  "description": "Jeu en JS avec Phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pouchanfrederic/TPJEUJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pouchanfrederic/TPJEUJS/issues"
+  },
+  "homepage": "https://github.com/pouchanfrederic/TPJEUJS#readme",
+  "dependencies": {
+    "phaser": "^3.52.0"
+  }
+}
