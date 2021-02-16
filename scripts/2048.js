@@ -22,9 +22,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload () {
-  this.load.image('carre', 'img/petitcarre.png ')
-  this.load.image('background', 'img/background.png ')
-
+  this.load.image('background', '../img/background.png')
+  this.load.image('carre', '../img/petitcarre.png')
 }
 
 function create () {
@@ -40,26 +39,47 @@ function create () {
 
   //TODO La ligne en dessous est sensé afficher l'image en background, mais ça ne fonctionne pas
   // this.bg = this.game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background').height, 'background');
-  this.add.image(400, 400, 'background');
-  this.add.image(300, 300, 'carre');
+  this.add.image(200,200, 'background');
+  this.add.image(55,55,'carre')
 
-  premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
+//this.add.image(150,55,'carre')
+//this.add.image(250,55,'carre')
+//this.add.image(345,55,'carre')
+
+// this.add.image(55,150,'carre')
+// this.add.image(55,250,'carre')
+// this.add.image(55,345,'carre')
+
+// this.add.image(150,150,'carre')
+// this.add.image(150,250,'carre')
+// this.add.image(150,345,'carre')
   
-  generateBlock = this.time.addEvent({
-    delay: 10000, 
-    callback: newBlock,
-    callbackScope: this, 
-    loop:true,
+// this.add.image(250,150,'carre')
+// this.add.image(250,250,'carre')
+//  this.add.image(250,345,'carre')
+  
+// this.add.image(345,150,'carre')
+//this.add.image(345,250,'carre')
+//  this.add.image(345,345,'carre')
 
-  });
+
+  //premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
+  
+  // generateBlock = this.time.addEvent({
+  //   delay: 10000, 
+  //   callback: newBlock,
+  //   callbackScope: this, 
+  //   loop:true,
+
+  // });
 
 }
 
 function update () {
   //TODO Cette condition fait bug le jeu, à voir pourquoi
-  // if(Phaser.Input.Keyboard.JustDown(RIGHT)){
-  //   premierCarre.x = premierCarre.x + 140;
-  // }
+  if(Phaser.Input.Keyboard.JustDown(RIGHT)){
+   premierCarre.x = premierCarre.x + 140;
+  }
 
 }
 
