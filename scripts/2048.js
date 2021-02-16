@@ -33,16 +33,16 @@ function create () {
   game.scale.refresh();
 
   rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-  // rightArrow.onDown.add(addPhaserDude, this); //Permettra d'ajouter d'autres blocs quand on appuie sur une touche
+
   leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+
   topArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+
   bottomArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
-  //TODO La ligne en dessous est sensé afficher l'image en background, mais ça ne fonctionne pas
-  // this.bg = this.game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background').height, 'background');
   this.add.image(200,200, 'background');
-  this.add.image(55,55,'carre')
 
+// this.add.image(55,55,'carre')
 //this.add.image(150,55,'carre')
 //this.add.image(250,55,'carre')
 //this.add.image(345,55,'carre')
@@ -64,7 +64,8 @@ function create () {
 //  this.add.image(345,345,'carre')
 
 
-  premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
+  premierCarre = this.physics.add.sprite(55,55, 'carre'); //Affiche 'bird' en x=40 y=40
+ 
   
   // generateBlock = this.time.addEvent({
   //   delay: 10000, 
@@ -75,21 +76,54 @@ function create () {
   // });
 
 }
-
+var rightBlock;
+var leftBlock;
+var topBlock;
+var bottomBlock;
 function update () {
-  //TODO Cette condition fait bug le jeu, à voir pourquoi
+
   if(rightArrow.isDown){
-   premierCarre.x = premierCarre.x + 10;
+    if (!rightBlock) {
+      premierCarre.x = premierCarre.x + 95;
+      console.log(premierCarre.x, premierCarre.y)
+      // addAnotherCarre()
+      rightBlock = true;
+    }
   }
+  if (rightArrow.isUp) {
+    rightBlock = false;
+}
+
   if(leftArrow.isDown){
-    premierCarre.x = premierCarre.x - 10;
+    if (!leftBlock) {
+      premierCarre.x = premierCarre.x - 95;
+      console.log(premierCarre.x, premierCarre.y)
+      leftBlock = true;
+    }
    }
+   if (leftArrow.isUp) {
+    leftBlock = false;
+}
   if(topArrow.isDown){
-  premierCarre.x = premierCarre.x - 10;
+    if (!topBlock) {
+      premierCarre.y = premierCarre.y - 95;
+      console.log(premierCarre.x, premierCarre.y)
+      topBlock = true;
+    }
   }
+  if (topArrow.isUp) {
+    topBlock = false;
+}
   if(bottomArrow.isDown){
-  premierCarre.x = premierCarre.x - 10;
+    if (!bottomBlock) {
+      premierCarre.y = premierCarre.y + 95;
+      console.log(premierCarre.x, premierCarre.y)
+      bottomBlock = true;
+    }
   }
+  if (bottomArrow.isUp) {
+    bottomBlock = false;
+}
 
 }
 
@@ -102,3 +136,9 @@ function newBlock(){
   //Stocker les positions des blocks existants dans un tableau/liste
 
 }
+
+function addAnotherCarre(){
+  console.log("test")
+  nouveauCarre = this.physics.add.sprite(150,55, 'carre'); //TODO : A voir pour changer le nom de la variable
+}
+
