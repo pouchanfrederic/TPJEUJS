@@ -22,8 +22,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload () {
-  this.load.image('background', 'img/background.png')
-  this.load.image('carre', 'img/petitcarre.png')
+  this.load.image('background', '../img/background.png')
+  this.load.image('carre', '../img/petitcarre.png')
 }
 
 function create () {
@@ -64,7 +64,7 @@ function create () {
 //  this.add.image(345,345,'carre')
 
 
-  premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
+  //premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
   
   // generateBlock = this.time.addEvent({
   //   delay: 10000, 
