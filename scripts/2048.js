@@ -22,8 +22,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload () {
-  this.load.image('background', '../img/background.png')
-  this.load.image('carre', '../img/petitcarre.png')
+  this.load.image('background', 'img/background.png')
+  this.load.image('carre', 'img/petitcarre.png')
 }
 
 function create () {
@@ -33,6 +33,7 @@ function create () {
   game.scale.refresh();
 
   rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+  // rightArrow.onDown.add(addPhaserDude, this); //Permettra d'ajouter d'autres blocs quand on appuie sur une touche
   leftArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
   topArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
   bottomArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -63,7 +64,7 @@ function create () {
 //  this.add.image(345,345,'carre')
 
 
-  //premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
+  premierCarre = this.physics.add.sprite(40,40, 'carre'); //Affiche 'bird' en x=40 y=40
   
   // generateBlock = this.time.addEvent({
   //   delay: 10000, 
@@ -77,8 +78,17 @@ function create () {
 
 function update () {
   //TODO Cette condition fait bug le jeu, à voir pourquoi
-  if(Phaser.Input.Keyboard.JustDown(RIGHT)){
-   premierCarre.x = premierCarre.x + 140;
+  if(rightArrow.isDown){
+   premierCarre.x = premierCarre.x + 10;
+  }
+  if(leftArrow.isDown){
+    premierCarre.x = premierCarre.x - 10;
+   }
+  if(topArrow.isDown){
+  premierCarre.x = premierCarre.x - 10;
+  }
+  if(bottomArrow.isDown){
+  premierCarre.x = premierCarre.x - 10;
   }
 
 }
