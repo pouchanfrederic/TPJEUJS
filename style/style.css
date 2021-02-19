@@ -6,3 +6,6 @@ body {
     display: table;
   }
   
+  #alignTitle{
+    text-align: center;
+  }
