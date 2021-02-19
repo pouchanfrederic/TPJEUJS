@@ -28,9 +28,9 @@ function preload() {
 
 function create() {
 
-  game.scale.pageAlignHorizontally = true;
-  game.scale.pageAlignVertically = true;
-  game.scale.refresh();
+  this.scale.pageAlignHorizontally = true;
+  this.scale.pageAlignVertically = true;
+  this.scale.refresh();
 
   rightArrow = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
@@ -64,8 +64,12 @@ function create() {
   //  this.add.image(345,345,'carre')
 
 
-  premierCarre = this.physics.add.sprite(55, 55, 'carre'); //Affiche 'bird' en x=40 y=40
-
+  premierCarre = this.physics.add.sprite(0, 0, 'carre'); //Affiche 'bird' en x=40 y=40
+  text = this.add.text(0, 0, "2", {font: "16px Arial", fill: "#dd1f1f"});
+  // premierCarre.addChild(text);
+  container = this.add.container(55, 55,[premierCarre,text]);
+  
+  // let label = this.add.text(20,20,"2",style);
 
   // generateBlock = this.time.addEvent({
   //   delay: 10000, 
@@ -81,17 +85,18 @@ var leftBlock;
 var topBlock;
 var bottomBlock;
 var nouveauCarre;
-function update() {
-  // debugger;
-  if (premierCarre.x == 346 && rightArrow.isDown) {return;}
-  if (premierCarre.x == 55 && leftArrow.isDown) {return null;}
-  if (premierCarre.y == 55 && topArrow.isDown) {return null;}
-  if (premierCarre.y == 346 && bottomArrow.isDown) {return null;}
+var label;
 
+function update() {
+
+  if (container.x == 346 && rightArrow.isDown) {return;}
+  if (container.x == 55 && leftArrow.isDown) {return;}
+  if (container.y == 55 && topArrow.isDown) {return;}
+  if (container.y == 346 && bottomArrow.isDown) {return;}
     if (rightArrow.isDown) {
       if (!rightBlock) {
-        premierCarre.x = premierCarre.x + 97;
-        console.log(premierCarre.x, premierCarre.y)
+        container.x = container.x + 97;
+        console.log(container.x, container.y)
         // addAnotherCarre(nouveauCarre)
         rightBlock = true;
       }
@@ -102,8 +107,8 @@ function update() {
 
     if (leftArrow.isDown) {
       if (!leftBlock) {
-        premierCarre.x = premierCarre.x - 97;
-        console.log(premierCarre.x, premierCarre.y)
+        container.x = container.x - 97;
+        console.log(container.x, container.y)
         leftBlock = true;
       }
     }
@@ -112,8 +117,8 @@ function update() {
     }
     if (topArrow.isDown) {
       if (!topBlock) {
-        premierCarre.y = premierCarre.y - 97;
-        console.log(premierCarre.x, premierCarre.y)
+        container.y = container.y - 97;
+        console.log(container.x, container.y)
         topBlock = true;
       }
     }
@@ -122,8 +127,8 @@ function update() {
     }
     if (bottomArrow.isDown) {
       if (!bottomBlock) {
-        premierCarre.y = premierCarre.y + 97;
-        console.log(premierCarre.x, premierCarre.y)
+        container.y = container.y + 97;
+        console.log(container.x, container.y)
         bottomBlock = true;
       }
     }
