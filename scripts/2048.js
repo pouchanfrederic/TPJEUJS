@@ -64,12 +64,22 @@ function create() {
   //  this.add.image(345,345,'carre')
 
 
-  premierCarre = this.physics.add.sprite(0, 0, 'carre'); //Affiche 'bird' en x=40 y=40
-  text = this.add.text(0, 0, "2", {font: "16px Arial", fill: "#dd1f1f"});
-  // premierCarre.addChild(text);
+  premierCarre = this.physics.add.sprite(0, 0, 'carre'); 
+  text = this.add.text(-20, 0, "2", {font: "32px Arial", fill: "#dd1f1f"});
+
+  deuxiemeCarre = this.physics.add.sprite(0, 0, 'carre'); 
+  text2 = this.add.text(-20, 0, "4", {font: "32px Arial", fill: "#dd1f1f"});
+
+  troisiemeCarre = this.physics.add.sprite(0, 0, 'carre'); 
+  text3 = this.add.text(-20, 0, "8", {font: "32px Arial", fill: "#dd1f1f"});
+
   container = this.add.container(55, 55,[premierCarre,text]);
-  
-  // let label = this.add.text(20,20,"2",style);
+  container2 = this.add.container(152, 55,[deuxiemeCarre,text2]);
+  container3 = this.add.container(249, 55,[troisiemeCarre,text3]);
+
+
+  squareCoords = [container, container2, container3];
+
 
   // generateBlock = this.time.addEvent({
   //   delay: 10000, 
@@ -89,14 +99,14 @@ var label;
 
 function update() {
 
-  if (container.x == 346 && rightArrow.isDown) {return;}
-  if (container.x == 55 && leftArrow.isDown) {return;}
-  if (container.y == 55 && topArrow.isDown) {return;}
-  if (container.y == 346 && bottomArrow.isDown) {return;}
+  // checkBorders(squareCoords);
+
+  if (this.physics.collide(premierCarre, deuxiemeCarre)){
+    container.destroy();
+  }
     if (rightArrow.isDown) {
       if (!rightBlock) {
-        container.x = container.x + 97;
-        console.log(container.x, container.y)
+        mooveRight(squareCoords);
         // addAnotherCarre(nouveauCarre)
         rightBlock = true;
       }
@@ -107,8 +117,7 @@ function update() {
 
     if (leftArrow.isDown) {
       if (!leftBlock) {
-        container.x = container.x - 97;
-        console.log(container.x, container.y)
+        mooveLeft(squareCoords);
         leftBlock = true;
       }
     }
@@ -117,8 +126,7 @@ function update() {
     }
     if (topArrow.isDown) {
       if (!topBlock) {
-        container.y = container.y - 97;
-        console.log(container.x, container.y)
+        mooveTop(squareCoords);
         topBlock = true;
       }
     }
@@ -127,8 +135,7 @@ function update() {
     }
     if (bottomArrow.isDown) {
       if (!bottomBlock) {
-        container.y = container.y + 97;
-        console.log(container.x, container.y)
+        mooveBottom(squareCoords);
         bottomBlock = true;
       }
     }
@@ -138,7 +145,7 @@ function update() {
 
   }
 
-function newBlock() {
+function newBlock() { //Ne fonctionne pas pour le moment 
 
   block = Math.floor(Math.random() * Math.floor(2));
   // block = Phaser.Math.RandomXY();
@@ -148,7 +155,48 @@ function newBlock() {
 
 }
 
+
 function addAnotherCarre(nouveauCarre) {
   nouveauCarre = this.physics.add.sprite(150, 55, 'carre'); //TODO : A voir pour changer le nom de la variable
 }
 
+function mooveRight(squareCoords){;
+  squareCoords.forEach(container => {
+    displayCoords(container)
+    if(container.x == 346){console.log("Coordonnées limite (dans le if)"); return; }
+    else{container.x = container.x + 97;}
+    displayCoords(container)
+  });
+}
+function mooveLeft(squareCoords){
+  squareCoords.forEach(container => {
+    displayCoords(container)
+    if(container.x == 55) {console.log("Coordonnées limite (dans le if)"); return; }
+    else{container.x = container.x - 97;}
+    displayCoords(container)
+ 
+  });
+}
+function mooveBottom(squareCoords){
+  squareCoords.forEach(container => {
+    displayCoords(container)
+    if(container.y == 346) {console.log("Coordonnées limite (dans le if)"); return; }
+    else{container.y = container.y + 97;}
+    displayCoords(container)
+  });
+}
+function mooveTop(squareCoords){
+  squareCoords.forEach(container => {
+    displayCoords(container)
+    if(container.y == 55) {console.log("Coordonnées limite (dans le if)"); return; }
+    else{container.y = container.y - 97;}
+    displayCoords(container)
+
+  });
+}
+
+function displayCoords(container){ //Cette méthode sert à afficher les coordonnées d'un container, à des fins de test 
+
+  console.log("X : " + container.x + " Y : " + container.y);
+  console.log("-----------------------------------------------------------------------------");
+}
