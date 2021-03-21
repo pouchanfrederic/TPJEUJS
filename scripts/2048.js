@@ -77,17 +77,14 @@ function create() {
   container2 = this.add.container(152, 55,[deuxiemeCarre,text2]);
   container3 = this.add.container(249, 55,[troisiemeCarre,text3]);
 
-
   squareCoords = [container, container2, container3];
 
+  console.log(squareCoords[1].list[1]._text); //Permet de connaître la valeur d'un carré
 
-  // generateBlock = this.time.addEvent({
-  //   delay: 10000, 
-  //   callback: newBlock,
-  //   callbackScope: this, 
-  //   loop:true,
+  if(squareCoords[1].list[1]._text < squareCoords[2].list[1]._text){
 
-  // });
+    console.log("Trop des barres");
+  }
 
 }
 var rightBlock;
@@ -166,14 +163,17 @@ function mooveRight(squareCoords){;
     if(container.x == 346){console.log("Coordonnées limite (dans le if)"); return; }
     else{container.x = container.x + 97;}
     displayCoords(container)
+    console.log("----------------------------------------------------------------------------");
+
   });
 }
 function mooveLeft(squareCoords){
-  squareCoords.forEach(container => {
+  squareCoords.forEach(container => { 
     displayCoords(container)
-    if(container.x == 55) {console.log("Coordonnées limite (dans le if)"); return; }
+    if(container.x == 55) {console.log("Coordonnées limite (dans le if)"); console.log("-----------------------------------------------"); return; }
     else{container.x = container.x - 97;}
     displayCoords(container)
+    console.log("----------------------------------------------------------------------------");
  
   });
 }
@@ -183,6 +183,8 @@ function mooveBottom(squareCoords){
     if(container.y == 346) {console.log("Coordonnées limite (dans le if)"); return; }
     else{container.y = container.y + 97;}
     displayCoords(container)
+    console.log("----------------------------------------------------------------------------");
+
   });
 }
 function mooveTop(squareCoords){
@@ -191,12 +193,21 @@ function mooveTop(squareCoords){
     if(container.y == 55) {console.log("Coordonnées limite (dans le if)"); return; }
     else{container.y = container.y - 97;}
     displayCoords(container)
+    console.log("----------------------------------------------------------------------------");
 
   });
 }
 
+function checkIfSameValue(container1, container2){
+  if(container1.list[1]._text == container2.list[1]._text){
+
+    console.log("Les 2 carrés ont la même valuer");
+    //TODO : Détruire celui qui est du côté de la direction souhaitée
+  }
+}
+
 function displayCoords(container){ //Cette méthode sert à afficher les coordonnées d'un container, à des fins de test 
 
-  console.log("X : " + container.x + " Y : " + container.y);
-  console.log("-----------------------------------------------------------------------------");
+  var today = new Date();
+  console.log("X : " + container.x + " |  Y : " + container.y + " | Heure : " +  today.getHours() + ":" + today.getMinutes()+ ":" + today.getSeconds());
 }
