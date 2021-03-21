@@ -81,10 +81,6 @@ function create() {
 
   console.log(squareCoords[1].list[1]._text); //Permet de connaître la valeur d'un carré
 
-  if(squareCoords[1].list[1]._text < squareCoords[2].list[1]._text){
-
-    console.log("Trop des barres");
-  }
 
 }
 var rightBlock;
@@ -98,9 +94,9 @@ function update() {
 
   // checkBorders(squareCoords);
 
-  if (this.physics.collide(premierCarre, deuxiemeCarre)){
-    container.destroy();
-  }
+  // if (this.physics.collide(premierCarre, deuxiemeCarre)){
+  //   container.destroy();
+  // }
     if (rightArrow.isDown) {
       if (!rightBlock) {
         mooveRight(squareCoords);
@@ -157,17 +153,30 @@ function addAnotherCarre(nouveauCarre) {
   nouveauCarre = this.physics.add.sprite(150, 55, 'carre'); //TODO : A voir pour changer le nom de la variable
 }
 
-function mooveRight(squareCoords){;
+function mooveRight(squareCoords){
+  console.clear();
   squareCoords.forEach(container => {
     displayCoords(container)
-    if(container.x == 346){console.log("Coordonnées limite (dans le if)"); return; }
-    else{container.x = container.x + 97;}
-    displayCoords(container)
-    console.log("----------------------------------------------------------------------------");
+    if(checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)){
+
+      console.log("La place du carré : " + container.list[1]._text + " est déjà prise"); 
+      return;
+    }
+    else{
+
+      if(container.x == 346){
+        console.log("Coordonnées limite (dans le if)");
+        return;
+      }
+      else {container.x = container.x + 97;}
+      displayCoords(container)
+      console.log("----------------------------------------------------------------------------");
+    }
 
   });
 }
 function mooveLeft(squareCoords){
+  console.clear();
   squareCoords.forEach(container => { 
     displayCoords(container)
     if(container.x == 55) {console.log("Coordonnées limite (dans le if)"); console.log("-----------------------------------------------"); return; }
@@ -178,6 +187,7 @@ function mooveLeft(squareCoords){
   });
 }
 function mooveBottom(squareCoords){
+  console.clear();
   squareCoords.forEach(container => {
     displayCoords(container)
     if(container.y == 346) {console.log("Coordonnées limite (dans le if)"); return; }
@@ -188,6 +198,7 @@ function mooveBottom(squareCoords){
   });
 }
 function mooveTop(squareCoords){
+  console.clear();
   squareCoords.forEach(container => {
     displayCoords(container)
     if(container.y == 55) {console.log("Coordonnées limite (dans le if)"); return; }
@@ -201,13 +212,26 @@ function mooveTop(squareCoords){
 function checkIfSameValue(container1, container2){
   if(container1.list[1]._text == container2.list[1]._text){
 
-    console.log("Les 2 carrés ont la même valuer");
+    console.log("Les 2 carrés ont la même valeur");
     //TODO : Détruire celui qui est du côté de la direction souhaitée
+    //Et prendre la valeur du carré restant puis faire x2
   }
+}
+
+function checkIfPlaceIsTaken(squareCoords, desiredX, desiredY){
+  var isXYTaken = false; 
+  squareCoords.forEach(container => { 
+    if(container.x == desiredX && container.y == desiredY) {isXYTaken = true;}
+    else{return;}
+  }); 
+
+  return isXYTaken;
+
 }
 
 function displayCoords(container){ //Cette méthode sert à afficher les coordonnées d'un container, à des fins de test 
 
   var today = new Date();
-  console.log("X : " + container.x + " |  Y : " + container.y + " | Heure : " +  today.getHours() + ":" + today.getMinutes()+ ":" + today.getSeconds());
+
+  console.log("Valeur du carré = " + container.list[1]._text + " | X : " + container.x + " |  Y : " + container.y + " | Heure : " +  today.getHours() + ":" + today.getMinutes()+ ":" + today.getSeconds());
 }
