@@ -157,11 +157,22 @@ function mooveRight(squareCoords){
   console.clear();
   squareCoords.forEach(container => {
     displayCoords(container)
-    if(checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)){
+    if(checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)){
 
-      console.log("La place du carré : " + container.list[1]._text + " est déjà prise"); 
+      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+3)"); 
       return;
     }
+    else if(checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y)){
+
+      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+2)"); 
+      return;
+    }
+    else if(checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)){
+
+      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+1)"); 
+      return;
+    }
+
     else{
 
       if(container.x == 346){
@@ -170,6 +181,7 @@ function mooveRight(squareCoords){
       }
       else {container.x = container.x + 97;}
       displayCoords(container)
+      // console.log(squareCoords.list[3].container.list[1].);
       console.log("----------------------------------------------------------------------------");
     }
 
