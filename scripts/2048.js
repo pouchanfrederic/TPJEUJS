@@ -77,7 +77,7 @@ function create() {
   container2 = this.add.container(152, 55,[deuxiemeCarre,text2]);
   container3 = this.add.container(249, 55,[troisiemeCarre,text3]);
 
-  squareCoords = [container, container2, container3];
+  squareCoords = [container, container2,  container3];
 
   console.log(squareCoords[1].list[1]._text); //Permet de connaître la valeur d'un carré
 
@@ -155,35 +155,37 @@ function addAnotherCarre(nouveauCarre) {
 
 function mooveRight(squareCoords){
   console.clear();
+  squareCoords.sort((a,b) => b.x - a.x);
   squareCoords.forEach(container => {
+  
     displayCoords(container)
-    if(checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)){
-
-      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+3)"); 
+    if(!checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)){
+      container.x += 291;
       return;
-    }
-    else if(checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y)){
-
-      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+2)"); 
-      return;
-    }
-    else if(checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)){
-
-      console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+1)"); 
-      return;
+      
     }
 
-    else{
+    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+3)"); 
 
-      if(container.x == 346){
-        console.log("Coordonnées limite (dans le if)");
+    if(!checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y)){
+      container.x += 194;
+      return;
+
+    }
+
+    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+2)"); 
+
+
+    if(!checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)){
+        container.x += 97;
         return;
-      }
-      else {container.x = container.x + 97;}
+    }
+
+    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+1)"); 
+
       displayCoords(container)
       // console.log(squareCoords.list[3].container.list[1].);
       console.log("----------------------------------------------------------------------------");
-    }
 
   });
 }
@@ -232,7 +234,9 @@ function checkIfSameValue(container1, container2){
 
 function checkIfPlaceIsTaken(squareCoords, desiredX, desiredY){
   var isXYTaken = false; 
+  if(desiredX > 346 || desiredY > 346 || desiredX < 55 || desiredY < 55){return true;}
   squareCoords.forEach(container => { 
+    // console.log("Je m'applique au container qui a la valeur : " + container.list[1]._text);
     if(container.x == desiredX && container.y == desiredY) {isXYTaken = true;}
     else{return;}
   }); 
