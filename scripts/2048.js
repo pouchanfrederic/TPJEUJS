@@ -363,26 +363,190 @@ function mooveLeft(squareCoords, scene) {
 
 function mooveBottom(squareCoords, scene) {
   console.clear();
+  var containersToDestroyList = [];
+
+  squareCoords.sort((a, b) => a.y - b.y);
   squareCoords.forEach(container => {
+
     displayCoords(container)
-    if (container.y == 346) { console.log("Coordonnées limite (dans le if)"); return; }
-    else { container.y = container.y + 97; }
-    displayCoords(container)
-    console.log("----------------------------------------------------------------------------");
+
+    var aimedContainer = getContainerByCoords(squareCoords, container.x, container.y + 291);
+
+
+    if (isInBoundaries(container.x, container.y + 291)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y + 291, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        containersToDestroyList.push(container);
+
+
+        console.log("On fusionne");
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y + 291, containersToDestroyList)) {
+        container.y += 291;
+        return;
+      }
+    }
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+3)");
+
+    // -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x, container.y + 194);
+
+    if (isInBoundaries(container.x, container.y + 194)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y + 194, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        containersToDestroyList.push(container);
+
+        console.log("On fusionne");
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y + 194, containersToDestroyList)) {
+        container.y += 194;
+        return;
+      }
+    }
+
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+2)");
+
+    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x, container.y + 97);
+
+    if (isInBoundaries(container.x, container.y + 97)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y + 97, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        console.log("On fusionne");
+
+        containersToDestroyList.push(container);
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y + 97, containersToDestroyList)) {
+
+        console.log("Je me déplace de 1")
+        container.y += 97;
+        return;
+      }
+    }
+
+    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   });
+
+  destroyContainers(squareCoords, containersToDestroyList);
 }
 function mooveTop(squareCoords, scene) {
 
   console.clear();
+  var containersToDestroyList = [];
+
+  squareCoords.sort((a, b) => b.y - a.y);
   squareCoords.forEach(container => {
+
     displayCoords(container)
-    if (container.y == 55) { console.log("Coordonnées limite (dans le if)"); return; }
-    else { container.y = container.y - 97; }
-    displayCoords(container)
-    console.log("----------------------------------------------------------------------------");
+
+    var aimedContainer = getContainerByCoords(squareCoords, container.x, container.y - 291);
+
+
+    if (isInBoundaries(container.x, container.y - 291)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y - 291, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        containersToDestroyList.push(container);
+
+
+        console.log("On fusionne");
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y - 291, containersToDestroyList)) {
+        container.y -= 291;
+        return;
+      }
+    }
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+3)");
+
+    // -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x, container.y - 194);
+
+    if (isInBoundaries(container.x, container.y - 194)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y - 194, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        containersToDestroyList.push(container);
+
+        console.log("On fusionne");
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y - 194, containersToDestroyList)) {
+        container.y -= 194;
+        return;
+      }
+    }
+
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+2)");
+
+    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x, container.y - 97);
+
+    if (isInBoundaries(container.x, container.y - 97)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x, container.y - 97, containersToDestroyList) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
+
+        console.log("On fusionne");
+
+        containersToDestroyList.push(container);
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x, container.y - 97, containersToDestroyList)) {
+
+        console.log("Je me déplace de 1")
+        container.y -= 97;
+        return;
+      }
+    }
+
+    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   });
+
+  destroyContainers(squareCoords, containersToDestroyList);
 }
 
 function checkIfSameValue(container1, container2) {
@@ -437,8 +601,8 @@ function checkIfPlaceIsTaken(squareCoords, desiredX, desiredY, containersToDelet
   if (!isInBoundaries(desiredX, desiredY)) { return true; } //Si les coordonées souhaitées sont hors limite 
 
   if (containersToDelete.length > 0) {
-    if (containersToDelete.some(container => 
-      
+    if (containersToDelete.some(container =>
+
       container.x == desiredX && container.y == desiredY
     )) { return false; }
   }
