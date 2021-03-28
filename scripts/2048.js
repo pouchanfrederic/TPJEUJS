@@ -668,6 +668,10 @@ function getColorFromValue(value) {
     return '#42f5d7';
   }
 
+  if (value == 32) {
+    return '#25f456';
+  }
+
   if (value == 1024) {
     return '#AFC';
   }
