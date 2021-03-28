@@ -73,11 +73,36 @@ function create() {
   troisiemeCarre = this.physics.add.sprite(0, 0, 'carre');
   text3 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
 
+  quatriemeCarre = this.physics.add.sprite(0, 0, 'carre');
+  text4 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
+
+  cinquiemeCarre = this.physics.add.sprite(0, 0, 'carre');
+  text5 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
+
+  sixiemeCarre = this.physics.add.sprite(0, 0, 'carre');
+  text6 = this.add.text(-20, 0, "4", { font: "32px Arial", fill: "#dd1f1f" });
+
+  septiemeCarre = this.physics.add.sprite(0, 0, 'carre');
+  text7 = this.add.text(-20, 0, "2", { font: "32px Arial", fill: "#dd1f1f" });
+
+  huitiemeCarre = this.physics.add.sprite(0, 0, 'carre');
+  text8 = this.add.text(-20, 0, "1024", { font: "32px Arial", fill: "#dd1f1f" });
+
+
   container = this.add.container(55, 55, [premierCarre, text]);
   container2 = this.add.container(152, 55, [deuxiemeCarre, text2]);
   container3 = this.add.container(249, 55, [troisiemeCarre, text3]);
 
-  squareCoords = [container, container2, container3];
+  container4 = this.add.container(55, 152, [quatriemeCarre, text4]);
+  container5 = this.add.container(249, 152, [cinquiemeCarre, text5]);
+
+  container6 = this.add.container(152, 249, [sixiemeCarre, text6]);
+  container7 = this.add.container(249, 249, [septiemeCarre, text7]);
+
+  container8 = this.add.container(55, 346, [huitiemeCarre, text8]);
+
+
+  squareCoords = [container, container2, container3, container4, container5, container6, container7, container8];
 
   console.log(squareCoords[1].list[1]._text); //Permet de connaître la valeur d'un carré
 
@@ -149,6 +174,8 @@ function mooveRight(squareCoords) {
   squareCoords.sort((a, b) => b.x - a.x);
   squareCoords.forEach(container => {
 
+    var destroyContainer = false;
+
     displayCoords(container)
 
     var aimedContainer = getContainerByCoords(squareCoords, container.x + 291, container.y);
@@ -158,67 +185,85 @@ function mooveRight(squareCoords) {
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        container.destroy();
+        console.log("Nous allons fusionner");
+        
 
         console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 291, container.y).list[1]._text);
 
         var remainingContainer = getContainerByCoords(squareCoords, container.x + 291, container.y);
+        remainingContainer.list[1]._text = parseInt(getSquareValue(aimedContainer)) * 2;
+
+        console.log("Valeur avant : " & getSquareValue(aimedContainer));
+
+        destroyContainer = true;
+
+      }
+
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)) {
+        container.x += 291;
+        return;
+      }
+    }
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+3)");
+
+    // -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x + 194, container.y);
+
+    if (isInBoundaries(container.x + 194, container.y)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        console.log("Valeur avant : " + getSquareValue(aimedContainer));
+
+        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
+
+
+        console.log("Valeur après : " + getSquareValue(aimedContainer));
+
+        squareCoords.splice(squareCoords.indexOf(container), 1);
+
+        container.destroy();
+
+        // debugger;
+
+        return;
+      }
+
+      if (!checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y)) {
+        container.x += 194;
+        return;
+      }
+    }
+
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+2)");
+
+    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    aimedContainer = getContainerByCoords(squareCoords, container.x + 97, container.y);
+
+    if (isInBoundaries(container.x + 97, container.y)) {
+
+      //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
+      if (checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
+
+        destroyContainer = true;
+
+        console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 97, container.y).list[1]._text);
+
+        var remainingContainer = getContainerByCoords(squareCoords, container.x + 97, container.y);
         remainingContainer.list[1]._text = parseInt(remainingContainer.list[1]._text) * 2;
 
         console.log("Valeur avant : " & remainingContainer.list[1]._text);
 
       }
-  
 
-    if (!checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)) {
-      container.x += 291;
-      return;
-    }
-  }
-    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+3)");
-
-    // -----------------------------------------------------------------------------------------------------------------------------------------------------
-
-    if (checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y) && getContainerByCoords(squareCoords, container.x + 194, container.y).list[1]._text == container.list[1]._text) {
-
-      container.destroy();
-
-      console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 194, container.y).list[1]._text);
-
-      var remainingContainer = getContainerByCoords(squareCoords, container.x + 194, container.y);
-      remainingContainer.list[1]._text = parseInt(remainingContainer.list[1]._text) * 2;
-
-      console.log("Valeur avant : " & remainingContainer.list[1]._text);
-
-    }
-
-    console.log("Olala nous avons la même valeur, nous sommes en mesure de fusionner 2");
-
-    if (!checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y)) {
-      container.x += 194;
-      return;
-    }
-
-    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+2)");
-
-    // ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    if (checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y) && getContainerByCoords(squareCoords, container.x + 97, container.y).list[1]._text == container.list[1]._text) {
-
-      container.destroy();
-
-      console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 97, container.y).list[1]._text);
-
-      var remainingContainer = getContainerByCoords(squareCoords, container.x + 97, container.y);
-      remainingContainer.list[1]._text = parseInt(remainingContainer.list[1]._text) * 2;
-
-      console.log("Valeur avant : " & remainingContainer.list[1]._text);
-
-    }
-
-    if (!checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)) {
-      container.x += 97;
-      return;
+      if (!checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)) {
+        container.x += 97;
+        return;
+      }
     }
 
     // ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -226,13 +271,15 @@ function mooveRight(squareCoords) {
 
     //faire un flag new pour les container, en mode si il bloc est nouveau (parce qu'il a déjà fusionné dans le tour)
 
-    console.log("La place du carré : " + container.list[1]._text + " est déjà prise (+1)");
+    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+1)");
 
     displayCoords(container)
     // console.log(squareCoords.list[3].container.list[1].);
     console.log("----------------------------------------------------------------------------");
-
+    if (destroyContainer){container.destroy();}
   });
+
+
 }
 function mooveLeft(squareCoords) {
   console.clear();
@@ -283,16 +330,15 @@ function checkIfSameValue(container1, container2) {
 
 function getContainerByCoords(squareCoords, x, y) {
 
-  //TODO : A voir si on a besoin de la vérification des limites
 
-    var containerToReturn;
-    squareCoords.forEach(container => {
-      // console.log("Je m'applique au container qui a la valeur : " + container.list[1]._text);
-      if (container.x == x && container.y == y) {containerToReturn = container;}
-      else { return; }
-    });
+  var containerToReturn;
+  squareCoords.forEach(container => {
+    // console.log("Je m'applique au container qui a la valeur : " + container.list[1]._text);
+    if (container.x == x && container.y == y) { containerToReturn = container; }
+    else { return; }
+  });
 
-    return containerToReturn;
+  return containerToReturn;
 
 }
 
