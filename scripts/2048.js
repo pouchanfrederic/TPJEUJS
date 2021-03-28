@@ -124,8 +124,7 @@ function update() {
   // }
   if (rightArrow.isDown) {
     if (!rightBlock) {
-      mooveRight(squareCoords);
-      // addAnotherCarre(nouveauCarre)
+      mooveRight(squareCoords, this);
       rightBlock = true;
     }
   }
@@ -169,7 +168,7 @@ function addAnotherCarre(nouveauCarre) {
   nouveauCarre = this.physics.add.sprite(150, 55, 'carre'); //TODO : A voir pour changer le nom de la variable
 }
 
-function mooveRight(squareCoords) {
+function mooveRight(squareCoords, scene) {
   console.clear();
   squareCoords.sort((a, b) => b.x - a.x);
   squareCoords.forEach(container => {
@@ -185,20 +184,20 @@ function mooveRight(squareCoords) {
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        console.log("Nous allons fusionner");
-        
+        console.log("Valeur avant : " + getSquareValue(aimedContainer));
 
-        console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 291, container.y).list[1]._text);
+        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
 
-        var remainingContainer = getContainerByCoords(squareCoords, container.x + 291, container.y);
-        remainingContainer.list[1]._text = parseInt(getSquareValue(aimedContainer)) * 2;
+        console.log("Valeur après : " + getSquareValue(aimedContainer));
 
-        console.log("Valeur avant : " & getSquareValue(aimedContainer));
+        squareCoords.splice(squareCoords.indexOf(container), 1);
 
-        destroyContainer = true;
+        container.destroy();
 
+        // debugger;
+
+        return;
       }
-
 
       if (!checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y)) {
         container.x += 291;
@@ -218,7 +217,7 @@ function mooveRight(squareCoords) {
 
         console.log("Valeur avant : " + getSquareValue(aimedContainer));
 
-        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
+        aimedContainer.list[1] = scene.add.text(-20, 0, parseInt(aimedContainer.list[1]._text) * 2, { font: "32px Arial", fill: "#dd1f1f" });
 
 
         console.log("Valeur après : " + getSquareValue(aimedContainer));
@@ -249,15 +248,20 @@ function mooveRight(squareCoords) {
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        destroyContainer = true;
+        console.log("Valeur avant : " + getSquareValue(aimedContainer));
 
-        console.log("Valeur avant : " & getContainerByCoords(squareCoords, container.x + 97, container.y).list[1]._text);
+        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
 
-        var remainingContainer = getContainerByCoords(squareCoords, container.x + 97, container.y);
-        remainingContainer.list[1]._text = parseInt(remainingContainer.list[1]._text) * 2;
 
-        console.log("Valeur avant : " & remainingContainer.list[1]._text);
+        console.log("Valeur après : " + getSquareValue(aimedContainer));
 
+        squareCoords.splice(squareCoords.indexOf(container), 1);
+
+        container.destroy();
+
+        // debugger;
+
+        return;
       }
 
       if (!checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y)) {
