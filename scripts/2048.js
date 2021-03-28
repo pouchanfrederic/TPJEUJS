@@ -65,28 +65,28 @@ function create() {
 
 
   premierCarre = this.physics.add.sprite(0, 0, 'carre');
-  text = this.add.text(-20, 0, "2", { font: "32px Arial", fill: "#dd1f1f" });
+  text = this.add.text(-20, 0, "2", { font: "32px Arial", fill: getColorFromValue(2) });
 
   deuxiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text2 = this.add.text(-20, 0, "2", { font: "32px Arial", fill: "#dd1f1f" });
+  text2 = this.add.text(-20, 0, "2", { font: "32px Arial", fill: getColorFromValue(2) });
 
   troisiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text3 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
+  text3 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: getColorFromValue(8) });
 
   quatriemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text4 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
+  text4 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: getColorFromValue(8) });
 
   cinquiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text5 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: "#dd1f1f" });
+  text5 = this.add.text(-20, 0, "8", { font: "32px Arial", fill: getColorFromValue(8) });
 
   sixiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text6 = this.add.text(-20, 0, "4", { font: "32px Arial", fill: "#dd1f1f" });
+  text6 = this.add.text(-20, 0, "4", { font: "32px Arial", fill: getColorFromValue(4) });
 
   septiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text7 = this.add.text(-20, 0, "2", { font: "32px Arial", fill: "#dd1f1f" });
+  text7 = this.add.text(-20, 0, "2", { font: "32px Arial", fill: getColorFromValue(2) });
 
   huitiemeCarre = this.physics.add.sprite(0, 0, 'carre');
-  text8 = this.add.text(-20, 0, "1024", { font: "32px Arial", fill: "#dd1f1f" });
+  text8 = this.add.text(-20, 0, "1024", { font: "32px Arial", fill: getColorFromValue(1024) });
 
 
   container = this.add.container(55, 55, [premierCarre, text]);
@@ -105,6 +105,7 @@ function create() {
   squareCoords = [container, container2, container3, container4, container5, container6, container7, container8];
 
   console.log(squareCoords[1].list[1]._text); //Permet de connaître la valeur d'un carré
+  console.log(squareCoords); //Permet de connaître la valeur d'un carré
 
 
 }
@@ -162,39 +163,35 @@ function update() {
 
 }
 
-
-
 function addAnotherCarre(nouveauCarre) {
   nouveauCarre = this.physics.add.sprite(150, 55, 'carre'); //TODO : A voir pour changer le nom de la variable
 }
 
 function mooveRight(squareCoords, scene) {
   console.clear();
+  var containersToDestroyList = [];
   squareCoords.sort((a, b) => b.x - a.x);
   squareCoords.forEach(container => {
 
-    var destroyContainer = false;
+    console.log(squareCoords);
 
     displayCoords(container)
 
     var aimedContainer = getContainerByCoords(squareCoords, container.x + 291, container.y);
+    
 
     if (isInBoundaries(container.x + 291, container.y)) {
 
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 291, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        console.log("Valeur avant : " + getSquareValue(aimedContainer));
 
-        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
 
-        console.log("Valeur après : " + getSquareValue(aimedContainer));
+        containersToDestroyList.push(container);
 
-        squareCoords.splice(squareCoords.indexOf(container), 1);
 
-        container.destroy();
-
-        // debugger;
+        console.log("On fusionne");
 
         return;
       }
@@ -215,18 +212,11 @@ function mooveRight(squareCoords, scene) {
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 194, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        console.log("Valeur avant : " + getSquareValue(aimedContainer));
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
 
-        aimedContainer.list[1] = scene.add.text(-20, 0, parseInt(aimedContainer.list[1]._text) * 2, { font: "32px Arial", fill: "#dd1f1f" });
+        containersToDestroyList.push(container);
 
-
-        console.log("Valeur après : " + getSquareValue(aimedContainer));
-
-        squareCoords.splice(squareCoords.indexOf(container), 1);
-
-        container.destroy();
-
-        // debugger;
+        console.log("On fusionne");
 
         return;
       }
@@ -248,18 +238,12 @@ function mooveRight(squareCoords, scene) {
       //Si la place est déjà prise et que le carré qui se trouve à cette place est de même valeur ... ALORS 
       if (checkIfPlaceIsTaken(squareCoords, container.x + 97, container.y) && aimedContainer.list[1]._text == container.list[1]._text) {
 
-        console.log("Valeur avant : " + getSquareValue(aimedContainer));
+        aimedContainer.list[1] = updateSquareText(aimedContainer, scene);
 
-        aimedContainer.list[1]._text = parseInt(aimedContainer.list[1]._text) * 2;
+        console.log("On fusionne");
 
+        containersToDestroyList.push(container);
 
-        console.log("Valeur après : " + getSquareValue(aimedContainer));
-
-        squareCoords.splice(squareCoords.indexOf(container), 1);
-
-        container.destroy();
-
-        // debugger;
 
         return;
       }
@@ -273,15 +257,10 @@ function mooveRight(squareCoords, scene) {
     // ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-    //faire un flag new pour les container, en mode si il bloc est nouveau (parce qu'il a déjà fusionné dans le tour)
 
-    console.log("La place du carré : " + getSquareValue(container) + " est déjà prise (+1)");
-
-    displayCoords(container)
-    // console.log(squareCoords.list[3].container.list[1].);
-    console.log("----------------------------------------------------------------------------");
-    if (destroyContainer){container.destroy();}
   });
+
+  destroyContainers(squareCoords, containersToDestroyList);
 
 
 }
@@ -346,6 +325,25 @@ function getContainerByCoords(squareCoords, x, y) {
 
 }
 
+function destroyContainers(squareCoords, containersToDestroy) {
+  
+  containersToDestroy.forEach(container => {
+     destroyContainer(squareCoords, container);
+    
+  });
+
+}
+
+function destroyContainer(squareCoords, containerToDestroy) {
+
+  squareCoords.forEach(container => {
+    // console.log("Je m'applique au container qui a la valeur : " + container.list[1]._text);
+    if (container.x == containerToDestroy.x && container.y == containerToDestroy.y) { container.destroy(); squareCoords.splice(squareCoords.indexOf(container), 1); }
+    else { return; }
+  });
+
+}
+
 function checkIfPlaceIsTaken(squareCoords, desiredX, desiredY) {
   var isTaken = false;
   if (!isInBoundaries(desiredX, desiredY)) { return true; } //Si les coordonées souhaitées sont hors limite 
@@ -366,6 +364,13 @@ function isInBoundaries(x, y) {
 
 }
 
+function updateSquareText(container, scene) {
+
+  let newValue = parseInt(container.list[1]._text) * 2;
+
+  return scene.add.text(-20, 0, newValue, { font: "32px Arial", fill: getColorFromValue(newValue) });
+}
+
 function getSquareValue(container) {
 
   return container.list[1]._text;
@@ -376,4 +381,27 @@ function displayCoords(container) { //Cette méthode sert à afficher les coordo
   var today = new Date();
 
   console.log("Valeur du carré = " + container.list[1]._text + " | X : " + container.x + " |  Y : " + container.y + " | Heure : " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
+}
+
+function getColorFromValue(value) {
+
+  if (value == 2) {
+    return '#f54242';
+  }
+
+  if (value == 4) {
+    return '#4245f5';
+  }
+
+  if (value == 8) {
+    return '#AEF';
+  }
+
+  if (value == 16) {
+    return '#42f5d7';
+  }
+
+  if (value == 1024) {
+    return '#AFC';
+  }
 }
